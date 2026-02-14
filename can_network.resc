@@ -53,6 +53,15 @@ connector Connect sysbus.can1 canHub
 mach set "nfov"
 connector Connect sysbus.can1 canHub
 
+
+# =========================================
+# Create SocketCAN Bridge (IMPORTANT)
+# =========================================
+mach set "ecu"
+machine CreateSocketCANBridge "socketcan" "vcan0"
+
+connector Connect socketcan canHub
+
 # =========================================
 # Start all
 # =========================================
