@@ -1,0 +1,77 @@
+# =========================================
+# Create machines
+# =========================================
+mach create "ecu"
+mach create "wfov"
+mach create "nfov"
+
+# =========================================
+# ----------- ECU NODE --------------------
+# =========================================
+mach set "ecu"
+
+machine LoadPlatformDescription @machine1.repl
+sysbus LoadELF @ecu_1.elf
+
+# UART1 analyzer
+showAnalyzer sysbus.usart1
+
+# =========================================
+# ----------- WFOV NODE -------------------
+# =========================================
+mach set "wfov"
+
+machine LoadPlatformDescription @machine1.repl
+sysbus LoadELF @wfov_1.elf
+
+showAnalyzer sysbus.usart1
+
+# =========================================
+# ----------- NFOV NODE -------------------
+# =========================================
+mach set "nfov"
+
+machine LoadPlatformDescription @machine1.repl
+sysbus LoadELF @nfov_1.elf
+
+showAnalyzer sysbus.usart1
+
+
+emulation SetGlobalQuantum "0.10000"
+
+# =========================================
+# Create CAN Hub
+# =========================================
+emulation CreateCANHub "canHub"
+
+# =========================================
+# Connect CAN1 of all nodes
+# =========================================
+mach set "ecu"
+connector Connect sysbus.can1 canHub
+
+mach set "wfov"
+connector Connect sysbus.can1 canHub
+
+mach set "nfov"
+connector Connect sysbus.can1 canHub
+
+# =========================================
+# Create SocketCAN Bridge (IMPORTANT)
+# =========================================
+mach set "ecu"
+machine CreateSocketCANBridge "socketcan"
+
+connector Connect socketcan canHub
+
+# =========================================
+# Start all
+# =========================================
+mach set "ecu"
+start
+
+mach set "wfov"
+start
+
+mach set "nfov"
+start
