@@ -36,6 +36,9 @@ showAnalyzer sysbus.usart1
 
 #showAnalyzer sysbus.usart1
 
+
+emulation SetGlobalQuantum "0.10000"
+
 # =========================================
 # Create CAN Hub
 # =========================================
