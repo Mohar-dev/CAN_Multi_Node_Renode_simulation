@@ -37,7 +37,7 @@ sysbus LoadELF @nfov_1.elf
 showAnalyzer sysbus.usart1
 
 
-emulation SetGlobalQuantum "0.10000"
+emulation SetGlobalQuantum "0.001"
 
 # =========================================
 # Create CAN Hub
